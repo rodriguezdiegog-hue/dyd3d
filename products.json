@@ -1,0 +1,224 @@
+[
+  {
+    "id": "prod_1",
+    "title": "Mates 3D Personalizados",
+    "category": "regalos",
+    "description": "Diseños únicos y ergonómicos en PLA, adaptados a tu mano.",
+    "price": "Consultar",
+    "images": ["https://images.unsplash.com/photo-1544787217-0726f6f79221?auto=format&fit=crop&w=400&q=80"],
+    "featured": true
+  },
+  {
+    "id": "prod_2",
+    "title": "Macetas para Suculentas",
+    "category": "hogar",
+    "description": "Geometrías modernas y minimalistas para tus plantas favoritas.",
+    "price": "Desde $5",
+    "images": ["https://images.unsplash.com/photo-1485955900006-10f4716773a3?auto=format&fit=crop&w=400&q=80"],
+    "featured": true
+  },
+  {
+    "id": "prod_3",
+    "title": "Llaveros Personalizados",
+    "category": "regalos",
+    "description": "Llaveros con nombres o logos, el detalle perfecto para cualquier ocasión.",
+    "price": "Desde $2",
+    "images": ["https://images.unsplash.com/photo-1584622650111-993a4c17777a?auto=format&fit=crop&w=400&q=80"],
+    "featured": false
+  },
+  {
+    "id": "prod_4",
+    "title": "Soportes para Celular",
+    "category": "accesorios",
+    "description": "Soportes estables y funcionales, ideales para escritorio o noche.",
+    "price": "Desde $8",
+    "images": ["https://images.unsplash.com/photo-1586105251261-776eb348427d?auto=format&fit=crop&w=400&q=80"],
+    "featured": true
+  },
+  {
+    "id": "prod_5",
+    "title": "Imanes Souvenirs",
+    "category": "regalos",
+    "description": "Pequeños recuerdos detallados en PLA, ideales para regalos masivos.",
+    "price": "Desde $3",
+    "images": ["https://images.unsplash.com/photo-1590073844007-f969735697f3?auto=format&fit=crop&w=400&q=80"],
+    "featured": false
+  },
+  {
+    "id": "prod_6",
+    "title": "Adornos Decorativos",
+    "category": "hogar",
+    "description": "Arte geométrico y figuras abstractas para decorar cualquier espacio.",
+    "price": "Consultar",
+    "images": ["https://images.unsplash.com/photo-1513519245088-0e17d7d17a36?auto=format&fit=crop&w=400&q=80"],
+    "featured": false
+  },
+  {
+    "id": "prod_7",
+    "title": "Tortuga ojos móviles",
+    "category": "regalos",
+    "description": "Divertida tortuga con ojos móviles, impresa en PLA de alta calidad.",
+    "price": "$6000",
+    "images": ["images/tortuga.jpg", "images/tortuga-2.heic"],
+    "featured": true
+  },
+  {
+    "id": "prod_8",
+    "title": "Llaveros antiestres corazones",
+    "category": "regalos",
+    "description": "Llaveros en forma de corazón, ideales para liberar estrés y decorar.",
+    "price": "$2000 c/u",
+    "images": ["images/llaveros-corazones.jpg"],
+    "featured": true
+  },
+  {
+    "id": "prod_9",
+    "title": "Llavero Pulpo articulado",
+    "category": "regalos",
+    "description": "Divertido pulpo articulado, ideal como juguete antiestrés o accesorio.",
+    "price": "$2500 c/u",
+    "images": ["images/pulpo-articulado.jpg"],
+    "featured": true
+  },
+  {
+    "id": "prod_10",
+    "title": "Mate con tapa MAORI",
+    "category": "regalos",
+    "description": "Mate la edición especial con tapa diseño MAORI, elegante y original.",
+    "price": "$10000",
+    "images": ["images/mate-maori.jpg", "images/mate-maori-2.jpg", "images/mate-maori-3.jpg"],
+    "featured": true
+  },
+  {
+    "id": "prod_11",
+    "title": "Mate con tapa CIBERPUNK",
+    "category": "regalos",
+    "description": "Diseño futurista y disruptivo, la combinación perfecta de tecnología y tradición.",
+    "price": "$10000",
+    "images": ["images/mate-cyberpunk.jpg", "images/mate-cyberpunk-2.jpg", "images/mate-cyberpunk-3.jpg"],
+    "featured": true
+  },
+  {
+    "id": "prod_12",
+    "title": "Gatito ojos móviles",
+    "category": "regalos",
+    "description": "Adorable gatito con un efecto visual increíble donde sus ojos parecen seguirte a todas partes gracias a su diseño inteligente.",
+    "price": "$6000",
+    "images": ["images/gatito-vigila.jpg", "images/gatito-vigila-2.heic", "images/gatito-vigila-3.heic", "images/gatito-vigila-4.heic", "images/gatito-vigila-5.heic"],
+    "featured": true
+  },
+  {
+    "id": "prod_13",
+    "title": "Llavero soporte para celulares",
+    "category": "accesorios",
+    "description": "Práctico llavero que sirve como soporte para tu celular. Compacto y útil.",
+    "price": "$2500",
+    "images": ["images/llavero-soporte-1.heic", "images/llavero-soporte-2.heic", "images/llavero-soporte-3.heic", "images/llavero-soporte-4.heic", "images/llavero-soporte-5.heic"],
+    "featured": true
+  },
+  {
+    "id": "prod_14",
+    "title": "Maceta gatito con ovillo de hilo",
+    "category": "hogar",
+    "description": "Tierno gatito con ovillo de hilo, ideal para tus plantas pequeñas.",
+    "price": "$8000",
+    "images": ["images/maceta-gatito-1.heic", "images/maceta-gatito-2.heic", "images/maceta-gatito-3.heic"],
+    "featured": true
+  },
+  {
+    "id": "prod_15",
+    "title": "Llaveros varios",
+    "category": "regalos",
+    "description": "Llaveros personalizados con diversos diseños y escudos.",
+    "price": "Consultar",
+    "images": [
+      "images/llaveros-varios-1.heic", "images/llaveros-varios-2.heic", "images/llaveros-varios-3.heic",
+      "images/llaveros-varios-4.heic", "images/llaveros-varios-5.heic", "images/llaveros-varios-6.heic",
+      "images/llaveros-varios-7.heic", "images/llaveros-varios-8.heic", "images/llaveros-varios-9.heic",
+      "images/llaveros-varios-10.heic", "images/llaveros-varios-11.heic", "images/llaveros-varios-final.heic",
+      "images/llaveros-varios-12.heic", "images/llaveros-varios-13.heic", "images/llaveros-varios-14.heic"
+    ],
+    "featured": true
+  },
+  {
+    "id": "prod_16",
+    "title": "Maceta Geométrica",
+    "category": "hogar",
+    "description": "Maceta con diseño geométrico moderno, ideal para cualquier espacio.",
+    "price": "$5000",
+    "images": ["images/maceta-geo-1.heic", "images/maceta-geo-2.heic", "images/maceta-geo-3.heic", "images/maceta-geo-4.heic"],
+    "featured": true
+  },
+  {
+    "id": "prod_17",
+    "title": "Maceta NEXO",
+    "category": "hogar",
+    "description": "Maceta con diseño NEXO, elegante y moderna.",
+    "price": "$6500",
+    "images": ["images/maceta-nexo-1.heic", "images/maceta-nexo-2.heic"],
+    "featured": true
+  },
+  {
+    "id": "prod_18",
+    "title": "Soporte celular corazón",
+    "category": "accesorios",
+    "description": "Elegante soporte para celular en forma de corazón, combinando utilidad y diseño.",
+    "price": "$8000",
+    "images": ["images/soporte-corazon-1.heic", "images/soporte-corazon-2.heic", "images/soporte-corazon-3.heic", "images/soporte-corazon-4.heic"],
+    "featured": true
+  },
+  {
+    "id": "prod_19",
+    "title": "Mate Rosa",
+    "category": "regalos",
+    "description": "Mate elegante en color rosa, ideal para quienes buscan un toque de distinción y estilo en cada cebada.",
+    "price": "$8500",
+    "images": ["images/mate-rosa-1.heic", "images/mate-rosa-2.heic", "images/mate-rosa-3.heic", "images/mate-rosa-4.heic"],
+    "featured": true
+  },
+  {
+    "id": "prod_20",
+    "title": "Maceta cuadrada p/ suculentas",
+    "category": "hogar",
+    "description": "Maceta cuadrada minimalista ideal para suculentas, diseño moderno y limpio.",
+    "price": "$5000",
+    "images": ["images/maceta-cuadrada-1.heic", "images/maceta-cuadrada-2.heic"],
+    "featured": true
+  },
+  {
+    "id": "prod_21",
+    "title": "Mate Geométrico",
+    "category": "regalos",
+    "description": "Mate con diseño geométrico vanguardista, una pieza de arte funcional para tus cebadas.",
+    "price": "$7500",
+    "images": ["images/mate-geometrico-1.heic", "images/mate-geometrico-2.heic", "images/mate-geometrico-3.heic", "images/mate-geometrico-4.heic"],
+    "featured": true
+  },
+  {
+    "id": "prod_22",
+    "title": "Lapicero Torre Castillo",
+    "category": "regalos",
+    "description": "Original y detallado lapicero con diseño de torre de castillo, ideal para decorar tu escritorio.",
+    "price": "$6500",
+    "images": ["images/lapicero-castillo-1.heic", "images/lapicero-castillo-2.heic", "images/lapicero-castillo-3.heic", "images/lapicero-castillo-4.heic", "images/lapicero-castillo-5.heic"],
+    "featured": true
+  },
+  {
+    "id": "prod_23",
+    "title": "Posavasos (Set de 6)",
+    "category": "hogar",
+    "description": "Set de 6 posavasos modernos, ideales para proteger tus superficies con estilo y originalidad.",
+    "price": "$8000",
+    "images": ["images/posavasos-1.heic"],
+    "featured": true
+  },
+  {
+    "id": "prod_24",
+    "title": "Maceta RAICES",
+    "category": "hogar",
+    "description": "Diseño orgánico y moderno, ideal para resaltar la belleza de tus plantas.",
+    "price": "$8000",
+    "images": ["images/maceta-raices-1.heic"],
+    "featured": true
+  }
+]
