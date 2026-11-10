@@ -97,16 +97,6 @@
         }
         .lightbox-prev { left: 20px; }
         .lightbox-next { right: 20px; }
-        
-        /* Animación de entrada para el modal */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
     </style>
 </head>
 <body class="bg-black">
@@ -114,22 +104,11 @@
 
     <script type="text/babel">
         const { useState, useEffect } = React;
-        const WHATSAPP_NUMBER = "543412299025"; // Número de WhatsApp sin el '+'
+        const WHATSAPP_NUMBER = "543412299025"; 
 
-        // ============================================================
-        // ESTRUCTURA DE SUBCARPETAS RECOMENDADA:
-        // images/
-        //   ├── regalos/          (mates, souvenirs, llaveros)
-        //   ├── hogar/            (macetas, posavasos)
-        //   ├── accesorios/       (soportes, llaveros funcionales)
-        //   ├── personajes/       (figuras decorativas)
-        //   └── logo.png
-        // ============================================================
-
-        // Datos de productos embebidos - AHORA CON RUTAS A SUBCARPETAS
-        // PARA CAMBIAR EL ORDEN: simplemente reordena los objetos en este array
+        // Datos de productos organizados por subcarpetas
         const INITIAL_PRODUCTS = [
-            // --- SECCIÓN REGALOS (primeros productos) ---
+            // --- SECCIÓN REGALOS ---
             {
                 "id": "prod_7",
                 "title": "Tortuga ojos móviles",
@@ -361,8 +340,7 @@
             }
         ];
 
-        // Imagen tolerante: si el archivo no carga (por ejemplo .jpg vs .JPG o .jpeg),
-        // prueba otras extensiones compatibles con Android antes de mostrar un aviso.
+        // Imagen tolerante
         const FALLBACK_EXTS = ['jpg', 'jpeg', 'png', 'webp', 'JPG', 'JPEG', 'PNG'];
         const SmartImg = ({ src, alt, className, onClick }) => {
             const base = src.replace(/\.[^./]+$/, '');
@@ -386,13 +364,12 @@
             );
         };
 
-        // Componente Lightbox para ampliar imágenes
+        // Componente Lightbox
         const Lightbox = ({ isOpen, images, currentIndex, onClose, onNext, onPrev }) => {
             if (!isOpen || !images || images.length === 0) return null;
             
             const currentImage = images[currentIndex];
             
-            // Cerrar con tecla ESC
             useEffect(() => {
                 const handleKeyDown = (e) => {
                     if (e.key === 'Escape') onClose();
@@ -402,7 +379,7 @@
                 
                 if (isOpen) {
                     document.addEventListener('keydown', handleKeyDown);
-                    document.body.style.overflow = 'hidden'; // Bloquear scroll
+                    document.body.style.overflow = 'hidden';
                 }
                 
                 return () => {
@@ -444,7 +421,6 @@
             const [isMenuOpen, setIsMenuOpen] = useState(false);
             const contactUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola D&D 3D, quisiera hacer una consulta.')}`;
 
-            // Bloquea el scroll de la página mientras el menú está abierto
             useEffect(() => {
                 document.body.style.overflow = isMenuOpen ? 'hidden' : '';
                 return () => { document.body.style.overflow = ''; };
@@ -532,7 +508,6 @@
                             <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight text-white">Nuestros Productos</h2>
                             <p className="text-slate-400 max-w-xl mx-auto mb-8">Explora nuestras creaciones... Listos para entregar o personalizar.</p>
 
-                            {/* Barra de Búsqueda */}
                             <div className="relative max-w-md mx-auto">
                                 <input
                                     type="search"
@@ -591,12 +566,10 @@
                 }
             };
 
-            // Abrir lightbox
             const openLightbox = () => {
                 setLightboxOpen(true);
             };
 
-            // Deslizar con el dedo para cambiar de foto
             const onTouchStart = (e) => { touchStartX.current = e.touches[0].clientX; };
             const onTouchEnd = (e) => {
                 if (touchStartX.current === null || images.length < 2) return;
@@ -640,7 +613,6 @@
                                 </div>
                             )}
                             
-                            {/* Indicador de click para ampliar */}
                             <div className="absolute top-4 left-4 bg-black/70 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-yellow-500 border border-yellow-900/50 opacity-0 group-hover:opacity-100 transition-opacity">
                                 👆 Click para ampliar
                             </div>
@@ -660,7 +632,6 @@
                         </div>
                     </div>
                     
-                    {/* Lightbox para este producto */}
                     <Lightbox 
                         isOpen={lightboxOpen}
                         images={images}
@@ -685,13 +656,11 @@
             const handleFileChange = (e) => {
                 const file = e.target.files[0];
                 if (file) {
-                    // Validar que sea una imagen
                     if (!file.type.startsWith('image/')) {
                         alert('Por favor selecciona un archivo de imagen válido (JPG, PNG, etc.)');
                         return;
                     }
                     
-                    // Validar tamaño (máximo 5MB)
                     if (file.size > 5 * 1024 * 1024) {
                         alert('La imagen es demasiado grande. Máximo 5MB.');
                         return;
@@ -715,10 +684,8 @@
                 
                 const encodedMessage = encodeURIComponent(message);
                 
-                // Abrir WhatsApp con el mensaje
                 window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
                 
-                // Si hay foto, mostrar instrucciones
                 if (formData.foto) {
                     setTimeout(() => {
                         alert('💡 IMPORTANTE: No olvides adjuntar la imagen "' + formData.fotoName + '" manualmente en WhatsApp después de que se abra el chat.');
@@ -737,7 +704,7 @@
                                 </div>
                                 <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-6 tracking-tighter text-white">¿Tienes un <span className="text-yellow-500">diseño propio?</span></h2>
                                 <p className="text-slate-400 text-lg mb-12 leading-relaxed">
-                                    Además de nuestro catálogo, imprimimos cualquier archivo <span className="text-white font-bold"></span> que necesites. Desde piezas técnicas hasta adornos personalizados.
+                                    Además de nuestro catálogo, imprimimos cualquier archivo que necesites. Desde piezas técnicas hasta adornos personalizados.
                                 </p>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left max-w-md mx-auto lg:mx-0">
                                     <div className="flex items-center gap-3 text-slate-300">
@@ -781,26 +748,8 @@
                                             required
                                         />
                                     </div>
-                                    <div className="sm:col-span-2 space-y-2">
-                                        <label className="text-sm font-medium text-slate-400 ml-1">Sube tu archivo 3D</label>
-                                        <div className="relative group">
-                                            <div className="w-full px-5 py-8 rounded-2xl bg-slate-950 border-2 border-dashed border-yellow-900/50 group-hover:border-yellow-600 transition-all flex flex-col items-center justify-center gap-3 cursor-pointer">
-                                                <span className="text-2xl">📤</span>
-                                                <span className="text-sm text-slate-500 group-hover:text-slate-300">Adjunta tu modelo 3D aquí</span>
-                                            </div>
-                                            <input 
-                                                type="file" 
-                                                accept=".stl,.obj,.3mf,.step,.stp"
-                                                className="absolute inset-0 opacity-0 cursor-pointer" 
-                                                onChange={(e) => {
-                                                    const file = e.target.files[0];
-                                                    if (file) {
-                                                        setFormData({...formData, foto: file, fotoName: file.name});
-                                                    }
-                                                }}
-                                            />
-                                        </div>
-                                    </div>
+                                    
+                                    {/* Campo único para adjuntar imagen de referencia */}
                                     <div className="sm:col-span-2 space-y-2">
                                         <label className="text-sm font-medium text-slate-400 ml-1">Adjunta imagen de referencia (opcional)</label>
                                         <div className="relative group">
@@ -819,6 +768,7 @@
                                             />
                                         </div>
                                     </div>
+
                                     <div className="sm:col-span-2 space-y-2">
                                         <label className="text-sm font-medium text-slate-400 ml-1">Detalles del pedido</label>
                                         <textarea
