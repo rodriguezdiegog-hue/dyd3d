@@ -20,6 +20,93 @@
         .bg-black-custom { background-color: #000000; }
         .text-gold { color: #d4af37; }
         .border-gold { border-color: #d4af37; }
+        
+        /* Estilos para el Lightbox/Modal */
+        .lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .lightbox-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .lightbox-image {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 8px;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+        .lightbox-overlay.active .lightbox-image {
+            transform: scale(1);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #d4af37;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .lightbox-close:hover {
+            background: #d4af37;
+            color: black;
+            transform: rotate(90deg);
+        }
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #d4af37;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .lightbox-nav:hover {
+            background: #d4af37;
+            color: black;
+        }
+        .lightbox-prev { left: 20px; }
+        .lightbox-next { right: 20px; }
+        
+        /* Animación de entrada para el modal */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
     </style>
 </head>
 <body class="bg-black">
@@ -29,15 +116,27 @@
         const { useState, useEffect } = React;
         const WHATSAPP_NUMBER = "543412299025"; // Número de WhatsApp sin el '+'
 
-        // Datos de productos embebidos para evitar errores de CORS al abrir el archivo localmente
+        // ============================================================
+        // ESTRUCTURA DE SUBCARPETAS RECOMENDADA:
+        // images/
+        //   ├── regalos/          (mates, souvenirs, llaveros)
+        //   ├── hogar/            (macetas, posavasos)
+        //   ├── accesorios/       (soportes, llaveros funcionales)
+        //   ├── personajes/       (figuras decorativas)
+        //   └── logo.png
+        // ============================================================
+
+        // Datos de productos embebidos - AHORA CON RUTAS A SUBCARPETAS
+        // PARA CAMBIAR EL ORDEN: simplemente reordena los objetos en este array
         const INITIAL_PRODUCTS = [
+            // --- SECCIÓN REGALOS (primeros productos) ---
             {
                 "id": "prod_7",
                 "title": "Tortuga ojos móviles",
                 "category": "regalos",
                 "description": "Divertida tortuga con ojos móviles.",
                 "price": "$6.000",
-                "images": ["images/tortuga.jpg", "images/tortuga-2.jpg"],
+                "images": ["images/regalos/tortuga.jpg", "images/regalos/tortuga-2.jpg"],
                 "featured": true
             },
             {
@@ -46,7 +145,7 @@
                 "category": "regalos",
                 "description": "Llaveros en forma de corazón, ideales para liberar estrés y decorar.",
                 "price": "$2.000 c/u",
-                "images": ["images/llaveros-corazones.jpg"],
+                "images": ["images/regalos/llaveros-corazones.jpg"],
                 "featured": true
             },
             {
@@ -55,7 +154,7 @@
                 "category": "regalos",
                 "description": "Divertido pulpo articulado, ideal como juguete antiestrés o accesorio.",
                 "price": "$2.500 c/u",
-                "images": ["images/pulpo-articulado.jpg"],
+                "images": ["images/regalos/pulpo-articulado.jpg"],
                 "featured": true
             },
             {
@@ -64,7 +163,7 @@
                 "category": "regalos",
                 "description": "Mate la edición especial con tapa diseño MAORI, elegante y original.",
                 "price": "$10.000",
-                "images": ["images/mate-maori.jpg", "images/mate-maori-2.jpg", "images/mate-maori-3.jpg"],
+                "images": ["images/regalos/mate-maori.jpg", "images/regalos/mate-maori-2.jpg", "images/regalos/mate-maori-3.jpg"],
                 "featured": true
             },
             {
@@ -73,7 +172,7 @@
                 "category": "regalos",
                 "description": "Diseño futurista y disruptivo, la combinación perfecta de tecnología y tradición.",
                 "price": "$10.000",
-                "images": ["images/mate-cyberpunk.jpg", "images/mate-cyberpunk-2.jpg", "images/mate-cyberpunk-3.jpg"],
+                "images": ["images/regalos/mate-cyberpunk.jpg", "images/regalos/mate-cyberpunk-2.jpg", "images/regalos/mate-cyberpunk-3.jpg"],
                 "featured": true
             },
             {
@@ -82,25 +181,7 @@
                 "category": "regalos",
                 "description": "Adorable gatito con un efecto visual increíble donde sus ojos parecen seguirte a todas partes gracias a su diseño inteligente.",
                 "price": "$6.000",
-                "images": ["images/gatito-vigila.jpg", "images/gatito-vigila-2.jpg", "images/gatito-vigila-3.jpg", "images/gatito-vigila-4.jpg"],
-                "featured": true
-            },
-            {
-                "id": "prod_13",
-                "title": "Llavero soporte para celulares",
-                "category": "accesorios",
-                "description": "Práctico llavero que sirve como soporte para tu celular. Compacto y útil.",
-                "price": "$2.500",
-                "images": ["images/llavero-soporte-1.jpg", "images/llavero-soporte-2.jpg", "images/llavero-soporte-3.jpg", "images/llavero-soporte-4.jpg", "images/llavero-soporte-5.jpg"],
-                "featured": true
-            },
-            {
-                "id": "prod_14",
-                "title": "Maceta gatito con ovillo de hilo",
-                "category": "hogar",
-                "description": "Tierno gatito con ovillo de hilo, ideal para tus plantas pequeñas.",
-                "price": "$8.000",
-                "images": ["images/maceta-gatito-1.jpg", "images/maceta-gatito-2.jpg", "images/maceta-gatito-3.jpg"],
+                "images": ["images/regalos/gatito-vigila.jpg", "images/regalos/gatito-vigila-2.jpg", "images/regalos/gatito-vigila-3.jpg", "images/regalos/gatito-vigila-4.jpg"],
                 "featured": true
             },
             {
@@ -110,38 +191,13 @@
                 "description": "Llaveros personalizados con diversos diseños y escudos.",
                 "price": "Consultar",
                 "images": [
-                    "images/llaveros-varios-1.jpg", "images/llaveros-varios-2.jpg", "images/llaveros-varios-3.jpg",
-                    "images/llaveros-varios-4.jpg", "images/llaveros-varios-5.jpg", "images/llaveros-varios-6.jpg",
-                    "images/llaveros-varios-7.jpg", "images/llaveros-varios-8.jpg", "images/llaveros-varios-9.jpg", "images/llaveros-varios-final.jpg",
-                    "images/llaveros-varios-12.jpg", "images/llaveros-varios-13.jpg", "images/llaveros-varios-14.jpg", "images/pietro1.jpeg", "images/piano.jpeg"
+                    "images/regalos/llaveros-varios-1.jpg", "images/regalos/llaveros-varios-2.jpg", "images/regalos/llaveros-varios-3.jpg",
+                    "images/regalos/llaveros-varios-4.jpg", "images/regalos/llaveros-varios-5.jpg", "images/regalos/llaveros-varios-6.jpg",
+                    "images/regalos/llaveros-varios-7.jpg", "images/regalos/llaveros-varios-8.jpg", "images/regalos/llaveros-varios-9.jpg", 
+                    "images/regalos/llaveros-varios-final.jpg",
+                    "images/regalos/llaveros-varios-12.jpg", "images/regalos/llaveros-varios-13.jpg", "images/regalos/llaveros-varios-14.jpg", 
+                    "images/regalos/pietro1.jpeg", "images/regalos/piano.jpeg"
                 ],
-                "featured": true
-            },
-            {
-                "id": "prod_16",
-                "title": "Maceta Geométrica",
-                "category": "hogar",
-                "description": "Maceta con diseño geométrico moderno, ideal para cualquier espacio.",
-                "price": "$5.000",
-                "images": ["images/maceta-geo-1.jpg", "images/maceta-geo-2.jpg", "images/maceta-geo-3.jpg", "images/maceta-geo-4.jpg"],
-                "featured": true
-            },
-            {
-                "id": "prod_17",
-                "title": "Maceta NEXO",
-                "category": "hogar",
-                "description": "Maceta con diseño NEXO, elegante y moderna.",
-                "price": "$6.500",
-                "images": ["images/maceta-nexo-1.jpg", "images/maceta-nexo-2.jpg"],
-                "featured": true
-            },
-            {
-                "id": "prod_18",
-                "title": "Soporte celular corazón",
-                "category": "accesorios",
-                "description": "Elegante soporte para celular en forma de corazón, combinando utilidad y diseño.",
-                "price": "$8000",
-                "images": ["images/soporte-corazon-1.jpg", "images/soporte-corazon-2.jpg", "images/soporte-corazon-3.jpg", "images/soporte-corazon-4.jpg", "images/sp1.jpeg", "images/sp2.jpeg", "images/sp3.jpeg"],
                 "featured": true
             },
             {
@@ -150,16 +206,7 @@
                 "category": "regalos",
                 "description": "Mate elegante en color rosa, ideal para quienes buscan un toque de distinción y estilo en cada cebada.",
                 "price": "$8.500",
-                "images": ["images/mate-rosa-1.jpg", "images/mate-rosa-2.jpg", "images/mate-rosa-3.jpg", "images/mate-rosa-4.jpg"],
-                "featured": true
-            },
-            {
-                "id": "prod_20",
-                "title": "Maceta cuadrada p/ suculentas",
-                "category": "hogar",
-                "description": "Maceta cuadrada minimalista ideal para suculentas, diseño moderno y limpio.",
-                "price": "$5.000",
-                "images": ["images/maceta-cuadrada-1.jpg", "images/maceta-cuadrada-2.jpg", "images/mc1.jpeg", "images/mc2.jpeg", "images/mc3.jpeg", "images/mc4.jpeg", "images/mc5.jpeg"],
+                "images": ["images/regalos/mate-rosa-1.jpg", "images/regalos/mate-rosa-2.jpg", "images/regalos/mate-rosa-3.jpg", "images/regalos/mate-rosa-4.jpg"],
                 "featured": true
             },
             {
@@ -168,7 +215,7 @@
                 "category": "regalos",
                 "description": "Mate con diseño geométrico vanguardista, una pieza de arte funcional para tus cebadas.",
                 "price": "$7.500",
-                "images": ["images/mate-geometrico-1.jpg", "images/mate-geometrico-2.jpg", "images/mate-geometrico-3.jpg", "images/mate-geometrico-4.jpg"],
+                "images": ["images/regalos/mate-geometrico-1.jpg", "images/regalos/mate-geometrico-2.jpg", "images/regalos/mate-geometrico-3.jpg", "images/regalos/mate-geometrico-4.jpg"],
                 "featured": true
             },
             {
@@ -177,34 +224,7 @@
                 "category": "regalos",
                 "description": "Original y detallado lapicero con diseño de torre de castillo, ideal para decorar tu escritorio.",
                 "price": "$6.500",
-                "images": ["images/lapicero-castillo-1.jpg", "images/lapicero-castillo-2.jpg", "images/lapicero-castillo-3.jpg", "images/lapicero-castillo-4.jpg", "images/lapicero-castillo-5.jpg"],
-                "featured": true
-            },
-            {
-                "id": "prod_23",
-                "title": "Posavasos (Set de 6)",
-                "category": "hogar",
-                "description": "Set de 6 posavasos modernos, ideales para proteger tus superficies con estilo y originalidad.",
-                "price": "$8.000",
-                "images": ["images/posavasos-1.jpg"],
-                "featured": true
-            },
-            {
-                "id": "prod_24",
-                "title": "Maceta RAICES",
-                "category": "hogar",
-                "description": "Diseño orgánico y moderno, ideal para resaltar la belleza de tus plantas.",
-                "price": "$8.000",
-                "images": ["images/maceta-raices-1.jpg"],
-                "featured": true
-            },
-            {
-                "id": "prod_25",
-                "title": "Maceta Espiralada",
-                "category": "hogar",
-                "description": "Diseño moderno, saliendo de diseños tradicionales.",
-                "price": "$8.000",
-                "images": ["images/maceta espiralada.jpg"],
+                "images": ["images/regalos/lapicero-castillo-1.jpg", "images/regalos/lapicero-castillo-2.jpg", "images/regalos/lapicero-castillo-3.jpg", "images/regalos/lapicero-castillo-4.jpg", "images/regalos/lapicero-castillo-5.jpg"],
                 "featured": true
             },
             {
@@ -213,7 +233,72 @@
                 "category": "hogar",
                 "description": "Diseño unico a pedido de un cliente. Consulta por el tuyo!!!",
                 "price": "Consultar",
-                "images": ["images/Souvenir Mis50.jpg", "images/Smis50a.jpg", "images/Smis50b.jpg"],
+                "images": ["images/regalos/Souvenir Mis50.jpg", "images/regalos/Smis50a.jpg", "images/regalos/Smis50b.jpg"],
+                "featured": true
+            },
+            
+            // --- SECCIÓN HOGAR ---
+            {
+                "id": "prod_14",
+                "title": "Maceta gatito con ovillo de hilo",
+                "category": "hogar",
+                "description": "Tierno gatito con ovillo de hilo, ideal para tus plantas pequeñas.",
+                "price": "$8.000",
+                "images": ["images/hogar/maceta-gatito-1.jpg", "images/hogar/maceta-gatito-2.jpg", "images/hogar/maceta-gatito-3.jpg"],
+                "featured": true
+            },
+            {
+                "id": "prod_16",
+                "title": "Maceta Geométrica",
+                "category": "hogar",
+                "description": "Maceta con diseño geométrico moderno, ideal para cualquier espacio.",
+                "price": "$5.000",
+                "images": ["images/hogar/maceta-geo-1.jpg", "images/hogar/maceta-geo-2.jpg", "images/hogar/maceta-geo-3.jpg", "images/hogar/maceta-geo-4.jpg"],
+                "featured": true
+            },
+            {
+                "id": "prod_17",
+                "title": "Maceta NEXO",
+                "category": "hogar",
+                "description": "Maceta con diseño NEXO, elegante y moderna.",
+                "price": "$6.500",
+                "images": ["images/hogar/maceta-nexo-1.jpg", "images/hogar/maceta-nexo-2.jpg"],
+                "featured": true
+            },
+            {
+                "id": "prod_20",
+                "title": "Maceta cuadrada p/ suculentas",
+                "category": "hogar",
+                "description": "Maceta cuadrada minimalista ideal para suculentas, diseño moderno y limpio.",
+                "price": "$5.000",
+                "images": ["images/hogar/maceta-cuadrada-1.jpg", "images/hogar/maceta-cuadrada-2.jpg", "images/hogar/mc1.jpeg", "images/hogar/mc2.jpeg", "images/hogar/mc3.jpeg", "images/hogar/mc4.jpeg", "images/hogar/mc5.jpeg"],
+                "featured": true
+            },
+            {
+                "id": "prod_23",
+                "title": "Posavasos (Set de 6)",
+                "category": "hogar",
+                "description": "Set de 6 posavasos modernos, ideales para proteger tus superficies con estilo y originalidad.",
+                "price": "$8.000",
+                "images": ["images/hogar/posavasos-1.jpg"],
+                "featured": true
+            },
+            {
+                "id": "prod_24",
+                "title": "Maceta RAICES",
+                "category": "hogar",
+                "description": "Diseño orgánico y moderno, ideal para resaltar la belleza de tus plantas.",
+                "price": "$8.000",
+                "images": ["images/hogar/maceta-raices-1.jpg"],
+                "featured": true
+            },
+            {
+                "id": "prod_25",
+                "title": "Maceta Espiralada",
+                "category": "hogar",
+                "description": "Diseño moderno, saliendo de diseños tradicionales.",
+                "price": "$8.000",
+                "images": ["images/hogar/maceta espiralada.jpg"],
                 "featured": true
             },
             {
@@ -222,16 +307,38 @@
                 "category": "hogar",
                 "description": "Para recordar el poder de la chancla, version con imán, adaptable para colocar en pared",
                 "price": "$6.000",
-                "images": ["images/chancla.jpeg"],
+                "images": ["images/hogar/chancla.jpeg"],
                 "featured": true
             },
+            
+            // --- SECCIÓN ACCESORIOS ---
+            {
+                "id": "prod_13",
+                "title": "Llavero soporte para celulares",
+                "category": "accesorios",
+                "description": "Práctico llavero que sirve como soporte para tu celular. Compacto y útil.",
+                "price": "$2.500",
+                "images": ["images/accesorios/llavero-soporte-1.jpg", "images/accesorios/llavero-soporte-2.jpg", "images/accesorios/llavero-soporte-3.jpg", "images/accesorios/llavero-soporte-4.jpg", "images/accesorios/llavero-soporte-5.jpg"],
+                "featured": true
+            },
+            {
+                "id": "prod_18",
+                "title": "Soporte celular corazón",
+                "category": "accesorios",
+                "description": "Elegante soporte para celular en forma de corazón, combinando utilidad y diseño.",
+                "price": "$8000",
+                "images": ["images/accesorios/soporte-corazon-1.jpg", "images/accesorios/soporte-corazon-2.jpg", "images/accesorios/soporte-corazon-3.jpg", "images/accesorios/soporte-corazon-4.jpg", "images/accesorios/sp1.jpeg", "images/accesorios/sp2.jpeg", "images/accesorios/sp3.jpeg"],
+                "featured": true
+            },
+            
+            // --- SECCIÓN PERSONAJES ---
             {
                 "id": "prod_28",
                 "title": "Merlina ojos moviles",
                 "category": "personaje",
                 "description": "Un personaje extravagante oscuro y ligeramente inquietante inspirado en la Familia Addams.",
                 "price": "$10.000",
-                "images": ["images/mer1.jpeg", "images/mer2.jpeg", "images/mer3.jpeg", "images/mer4.jpeg", "images/mer5.jpeg", "images/mer6.jpeg"],
+                "images": ["images/personajes/mer1.jpeg", "images/personajes/mer2.jpeg", "images/personajes/mer3.jpeg", "images/personajes/mer4.jpeg", "images/personajes/mer5.jpeg", "images/personajes/mer6.jpeg"],
                 "featured": true
             },
             {
@@ -240,7 +347,7 @@
                 "category": "personaje",
                 "description": "Bonito perrito con sus ojos móviles",
                 "price": "$6.000",
-                "images": ["images/bull1.jpeg", "images/bull2.jpeg", "images/bull3.jpeg", "images/bull4.jpeg"],
+                "images": ["images/personajes/bull1.jpeg", "images/personajes/bull2.jpeg", "images/personajes/bull3.jpeg", "images/personajes/bull4.jpeg"],
                 "featured": true
             },
             {
@@ -249,7 +356,7 @@
                 "category": "personaje",
                 "description": "Este modelo está diseñado en una forma sencilla y estilizada que lo hace perfecto como juguete de escritorio, decoración o regalo.",
                 "price": "$6.000",
-                "images": ["images/ppt1.jpeg", "images/ppt2.jpeg", "images/ppt3.jpeg", "images/ppt4.jpeg"],
+                "images": ["images/personajes/ppt1.jpeg", "images/personajes/ppt2.jpeg", "images/personajes/ppt3.jpeg", "images/personajes/ppt4.jpeg"],
                 "featured": true
             }
         ];
@@ -257,7 +364,7 @@
         // Imagen tolerante: si el archivo no carga (por ejemplo .jpg vs .JPG o .jpeg),
         // prueba otras extensiones compatibles con Android antes de mostrar un aviso.
         const FALLBACK_EXTS = ['jpg', 'jpeg', 'png', 'webp', 'JPG', 'JPEG', 'PNG'];
-        const SmartImg = ({ src, alt, className }) => {
+        const SmartImg = ({ src, alt, className, onClick }) => {
             const base = src.replace(/\.[^./]+$/, '');
             const candidates = [src, ...FALLBACK_EXTS.map(e => `${base}.${e}`).filter(u => u !== src)];
             const [idx, setIdx] = useState(0);
@@ -273,7 +380,63 @@
                     loading="lazy"
                     decoding="async"
                     onError={() => setIdx(i => i + 1)}
+                    onClick={onClick}
+                    style={{ cursor: onClick ? 'pointer' : 'default' }}
                 />
+            );
+        };
+
+        // Componente Lightbox para ampliar imágenes
+        const Lightbox = ({ isOpen, images, currentIndex, onClose, onNext, onPrev }) => {
+            if (!isOpen || !images || images.length === 0) return null;
+            
+            const currentImage = images[currentIndex];
+            
+            // Cerrar con tecla ESC
+            useEffect(() => {
+                const handleKeyDown = (e) => {
+                    if (e.key === 'Escape') onClose();
+                    if (e.key === 'ArrowRight' && images.length > 1) onNext();
+                    if (e.key === 'ArrowLeft' && images.length > 1) onPrev();
+                };
+                
+                if (isOpen) {
+                    document.addEventListener('keydown', handleKeyDown);
+                    document.body.style.overflow = 'hidden'; // Bloquear scroll
+                }
+                
+                return () => {
+                    document.removeEventListener('keydown', handleKeyDown);
+                    document.body.style.overflow = '';
+                };
+            }, [isOpen, onClose, onNext, onPrev, images.length]);
+            
+            return (
+                <div className={`lightbox-overlay ${isOpen ? 'active' : ''}`} onClick={onClose}>
+                    <button className="lightbox-close" onClick={(e) => { e.stopPropagation(); onClose(); }}>✕</button>
+                    
+                    {images.length > 1 && (
+                        <>
+                            <button className="lightbox-nav lightbox-prev" onClick={(e) => { e.stopPropagation(); onPrev(); }}>❮</button>
+                            <button className="lightbox-nav lightbox-next" onClick={(e) => { e.stopPropagation(); onNext(); }}>❯</button>
+                        </>
+                    )}
+                    
+                    <SmartImg 
+                        src={currentImage} 
+                        alt="Imagen ampliada" 
+                        className="lightbox-image"
+                        onClick={(e) => e.stopPropagation()}
+                    />
+                    
+                    {images.length > 1 && (
+                        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                            {images.map((_, i) => (
+                                <div key={i} className={`w-3 h-3 rounded-full ${i === currentIndex ? 'bg-yellow-500' : 'bg-slate-500'}`} />
+                            ))}
+                        </div>
+                    )}
+                </div>
             );
         };
 
@@ -410,6 +573,7 @@
 
         const ProductCard = ({ product }) => {
             const [currentImg, setCurrentImg] = useState(0);
+            const [lightboxOpen, setLightboxOpen] = useState(false);
             const touchStartX = React.useRef(null);
             const images = product.images || (product.image ? [product.image] : []);
 
@@ -427,6 +591,11 @@
                 }
             };
 
+            // Abrir lightbox
+            const openLightbox = () => {
+                setLightboxOpen(true);
+            };
+
             // Deslizar con el dedo para cambiar de foto
             const onTouchStart = (e) => { touchStartX.current = e.touches[0].clientX; };
             const onTouchEnd = (e) => {
@@ -439,46 +608,68 @@
             };
 
             return (
-                <div className="group rounded-3xl bg-black border border-yellow-900/30 overflow-hidden md:hover:border-yellow-600/50 transition-all md:hover:-translate-y-2 flex flex-col">
-                    <div className="aspect-square overflow-hidden relative p-4 bg-slate-900/30 touch-pan-y" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-                        {images.length > 0 ? (
-                            <SmartImg src={images[currentImg]} alt={product.title} className="w-full h-full object-contain object-center transition-transform duration-500 md:group-hover:scale-110" />
-                        ) : (
-                            <div className="w-full h-full bg-slate-800 flex items-center justify-center text-slate-500">Sin imagen</div>
-                        )}
+                <>
+                    <div className="group rounded-3xl bg-black border border-yellow-900/30 overflow-hidden md:hover:border-yellow-600/50 transition-all md:hover:-translate-y-2 flex flex-col">
+                        <div className="aspect-square overflow-hidden relative p-4 bg-slate-900/30 touch-pan-y" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+                            {images.length > 0 ? (
+                                <SmartImg 
+                                    src={images[currentImg]} 
+                                    alt={product.title} 
+                                    className="w-full h-full object-contain object-center transition-transform duration-500 md:group-hover:scale-110" 
+                                    onClick={openLightbox}
+                                />
+                            ) : (
+                                <div className="w-full h-full bg-slate-800 flex items-center justify-center text-slate-500">Sin imagen</div>
+                            )}
 
-                        {images.length > 1 && (
-                            <div className="absolute inset-0 flex items-center justify-between px-2 z-10 pointer-events-none">
-                                <button onClick={prevImg} aria-label="Foto anterior" className="w-11 h-11 rounded-full bg-black/80 text-white flex items-center justify-center active:bg-yellow-600 md:hover:bg-yellow-600 transition-all shadow-xl border-2 border-yellow-500 font-bold text-lg pointer-events-auto">❮</button>
-                                <button onClick={nextImg} aria-label="Foto siguiente" className="w-11 h-11 rounded-full bg-black/80 text-white flex items-center justify-center active:bg-yellow-600 md:hover:bg-yellow-600 transition-all shadow-xl border-2 border-yellow-500 font-bold text-lg pointer-events-auto">❯</button>
+                            {images.length > 1 && (
+                                <div className="absolute inset-0 flex items-center justify-between px-2 z-10 pointer-events-none">
+                                    <button onClick={prevImg} aria-label="Foto anterior" className="w-11 h-11 rounded-full bg-black/80 text-white flex items-center justify-center active:bg-yellow-600 md:hover:bg-yellow-600 transition-all shadow-xl border-2 border-yellow-500 font-bold text-lg pointer-events-auto">❮</button>
+                                    <button onClick={nextImg} aria-label="Foto siguiente" className="w-11 h-11 rounded-full bg-black/80 text-white flex items-center justify-center active:bg-yellow-600 md:hover:bg-yellow-600 transition-all shadow-xl border-2 border-yellow-500 font-bold text-lg pointer-events-auto">❯</button>
+                                </div>
+                            )}
+
+                            <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-yellow-500 border border-yellow-900/50">
+                                {product.price}
                             </div>
-                        )}
-
-                        <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-yellow-500 border border-yellow-900/50">
-                            {product.price}
+                            {images.length > 1 && (
+                                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1">
+                                    {images.map((_, i) => (
+                                        <div key={i} className={`w-2 h-2 rounded-full ${i === currentImg ? 'bg-yellow-500' : 'bg-slate-500'}`} />
+                                    ))}
+                                </div>
+                            )}
+                            
+                            {/* Indicador de click para ampliar */}
+                            <div className="absolute top-4 left-4 bg-black/70 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-yellow-500 border border-yellow-900/50 opacity-0 group-hover:opacity-100 transition-opacity">
+                                👆 Click para ampliar
+                            </div>
                         </div>
-                        {images.length > 1 && (
-                            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1">
-                                {images.map((_, i) => (
-                                    <div key={i} className={`w-2 h-2 rounded-full ${i === currentImg ? 'bg-yellow-500' : 'bg-slate-500'}`} />
-                                ))}
-                            </div>
-                        )}
+                        <div className="p-6 flex flex-col flex-grow">
+                            <h3 className="text-xl font-bold mb-2 text-white">{product.title}</h3>
+                            <p className="text-slate-400 text-sm mb-6 leading-relaxed">{product.description}</p>
+                            <button
+                                onClick={() => {
+                                    const message = encodeURIComponent(`Hola D&D 3D, me interesa el producto *${product.title}*. ¿Me podrías dar más información?`);
+                                    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank');
+                                }}
+                                className="mt-auto w-full py-3.5 rounded-xl bg-yellow-600/10 border border-yellow-600/30 text-yellow-500 font-bold active:bg-yellow-600 active:text-black md:hover:bg-yellow-600 md:hover:text-black transition-all flex items-center justify-center gap-2"
+                            >
+                                📧 Pedir este producto
+                            </button>
+                        </div>
                     </div>
-                    <div className="p-6 flex flex-col flex-grow">
-                        <h3 className="text-xl font-bold mb-2 text-white">{product.title}</h3>
-                        <p className="text-slate-400 text-sm mb-6 leading-relaxed">{product.description}</p>
-                        <button
-                            onClick={() => {
-                                const message = encodeURIComponent(`Hola D&D 3D, me interesa el producto *${product.title}*. ¿Me podrías dar más información?`);
-                                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank');
-                            }}
-                            className="mt-auto w-full py-3.5 rounded-xl bg-yellow-600/10 border border-yellow-600/30 text-yellow-500 font-bold active:bg-yellow-600 active:text-black md:hover:bg-yellow-600 md:hover:text-black transition-all flex items-center justify-center gap-2"
-                        >
-                            📧 Pedir este producto
-                        </button>
-                    </div>
-                </div>
+                    
+                    {/* Lightbox para este producto */}
+                    <Lightbox 
+                        isOpen={lightboxOpen}
+                        images={images}
+                        currentIndex={currentImg}
+                        onClose={() => setLightboxOpen(false)}
+                        onNext={() => setCurrentImg((prev) => (prev + 1) % images.length)}
+                        onPrev={() => setCurrentImg((prev) => (prev - 1 + images.length) % images.length)}
+                    />
+                </>
             );
         };
 
@@ -486,18 +677,53 @@
             const [formData, setFormData] = useState({
                 nombre: '',
                 email: '',
-                detalles: ''
+                detalles: '',
+                foto: null,
+                fotoName: ''
             });
+
+            const handleFileChange = (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    // Validar que sea una imagen
+                    if (!file.type.startsWith('image/')) {
+                        alert('Por favor selecciona un archivo de imagen válido (JPG, PNG, etc.)');
+                        return;
+                    }
+                    
+                    // Validar tamaño (máximo 5MB)
+                    if (file.size > 5 * 1024 * 1024) {
+                        alert('La imagen es demasiado grande. Máximo 5MB.');
+                        return;
+                    }
+                    
+                    setFormData({...formData, foto: file, fotoName: file.name});
+                }
+            };
 
             const handleSubmit = (e) => {
                 e.preventDefault();
-                const message = encodeURIComponent(
-                    `Hola D&D 3D, quiero hacer un pedido especial:\n\n` +
+                
+                let message = `Hola D&D 3D, quiero hacer un pedido especial:\n\n` +
                     `👤 *Nombre:* ${formData.nombre}\n` +
                     `📧 *Email:* ${formData.email}\n` +
-                    `📝 *Detalles:* ${formData.detalles}`
-                );
-                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank');
+                    `📝 *Detalles:* ${formData.detalles}`;
+                
+                if (formData.fotoName) {
+                    message += `\n\n📷 *Archivo adjunto:* ${formData.fotoName}\n⚠️ Por favor, adjunta la imagen manualmente en WhatsApp`;
+                }
+                
+                const encodedMessage = encodeURIComponent(message);
+                
+                // Abrir WhatsApp con el mensaje
+                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
+                
+                // Si hay foto, mostrar instrucciones
+                if (formData.foto) {
+                    setTimeout(() => {
+                        alert('💡 IMPORTANTE: No olvides adjuntar la imagen "' + formData.fotoName + '" manualmente en WhatsApp después de que se abra el chat.');
+                    }, 1000);
+                }
             };
 
             return (
@@ -556,13 +782,41 @@
                                         />
                                     </div>
                                     <div className="sm:col-span-2 space-y-2">
-                                        <label className="text-sm font-medium text-slate-400 ml-1">Sube tu archivo</label>
+                                        <label className="text-sm font-medium text-slate-400 ml-1">Sube tu archivo 3D</label>
                                         <div className="relative group">
                                             <div className="w-full px-5 py-8 rounded-2xl bg-slate-950 border-2 border-dashed border-yellow-900/50 group-hover:border-yellow-600 transition-all flex flex-col items-center justify-center gap-3 cursor-pointer">
                                                 <span className="text-2xl">📤</span>
                                                 <span className="text-sm text-slate-500 group-hover:text-slate-300">Adjunta tu modelo 3D aquí</span>
                                             </div>
-                                            <input type="file" className="absolute inset-0 opacity-0 cursor-pointer" />
+                                            <input 
+                                                type="file" 
+                                                accept=".stl,.obj,.3mf,.step,.stp"
+                                                className="absolute inset-0 opacity-0 cursor-pointer" 
+                                                onChange={(e) => {
+                                                    const file = e.target.files[0];
+                                                    if (file) {
+                                                        setFormData({...formData, foto: file, fotoName: file.name});
+                                                    }
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="sm:col-span-2 space-y-2">
+                                        <label className="text-sm font-medium text-slate-400 ml-1">Adjunta imagen de referencia (opcional)</label>
+                                        <div className="relative group">
+                                            <div className="w-full px-5 py-6 rounded-2xl bg-slate-950 border-2 border-dashed border-yellow-900/50 group-hover:border-yellow-600 transition-all flex flex-col items-center justify-center gap-3 cursor-pointer">
+                                                <span className="text-2xl">🖼️</span>
+                                                <span className="text-sm text-slate-500 group-hover:text-slate-300">
+                                                    {formData.fotoName ? `✅ ${formData.fotoName}` : 'Selecciona una imagen (JPG, PNG)'}
+                                                </span>
+                                                <span className="text-xs text-slate-600">Máximo 5MB • Se adjuntará manualmente en WhatsApp</span>
+                                            </div>
+                                            <input 
+                                                type="file" 
+                                                accept="image/*"
+                                                className="absolute inset-0 opacity-0 cursor-pointer" 
+                                                onChange={handleFileChange}
+                                            />
                                         </div>
                                     </div>
                                     <div className="sm:col-span-2 space-y-2">
