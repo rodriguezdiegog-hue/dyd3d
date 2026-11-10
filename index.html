@@ -106,16 +106,15 @@
         const { useState, useEffect } = React;
         const WHATSAPP_NUMBER = "543412299025"; 
 
-        // Datos de productos organizados por subcarpetas
+        // Datos de productos - Rutas simplificadas a la carpeta images/ principal
         const INITIAL_PRODUCTS = [
-            // --- SECCIÓN REGALOS ---
             {
                 "id": "prod_7",
                 "title": "Tortuga ojos móviles",
                 "category": "regalos",
                 "description": "Divertida tortuga con ojos móviles.",
                 "price": "$6.000",
-                "images": ["images/regalos/tortuga.jpg", "images/regalos/tortuga-2.jpg"],
+                "images": ["images/tortuga.jpg", "images/tortuga-2.jpg"],
                 "featured": true
             },
             {
@@ -124,7 +123,7 @@
                 "category": "regalos",
                 "description": "Llaveros en forma de corazón, ideales para liberar estrés y decorar.",
                 "price": "$2.000 c/u",
-                "images": ["images/regalos/llaveros-corazones.jpg"],
+                "images": ["images/llaveros-corazones.jpg"],
                 "featured": true
             },
             {
@@ -133,7 +132,7 @@
                 "category": "regalos",
                 "description": "Divertido pulpo articulado, ideal como juguete antiestrés o accesorio.",
                 "price": "$2.500 c/u",
-                "images": ["images/regalos/pulpo-articulado.jpg"],
+                "images": ["images/pulpo-articulado.jpg"],
                 "featured": true
             },
             {
@@ -142,7 +141,7 @@
                 "category": "regalos",
                 "description": "Mate la edición especial con tapa diseño MAORI, elegante y original.",
                 "price": "$10.000",
-                "images": ["images/regalos/mate-maori.jpg", "images/regalos/mate-maori-2.jpg", "images/regalos/mate-maori-3.jpg"],
+                "images": ["images/mate-maori.jpg", "images/mate-maori-2.jpg", "images/mate-maori-3.jpg"],
                 "featured": true
             },
             {
@@ -151,7 +150,7 @@
                 "category": "regalos",
                 "description": "Diseño futurista y disruptivo, la combinación perfecta de tecnología y tradición.",
                 "price": "$10.000",
-                "images": ["images/regalos/mate-cyberpunk.jpg", "images/regalos/mate-cyberpunk-2.jpg", "images/regalos/mate-cyberpunk-3.jpg"],
+                "images": ["images/mate-cyberpunk.jpg", "images/mate-cyberpunk-2.jpg", "images/mate-cyberpunk-3.jpg"],
                 "featured": true
             },
             {
@@ -160,7 +159,25 @@
                 "category": "regalos",
                 "description": "Adorable gatito con un efecto visual increíble donde sus ojos parecen seguirte a todas partes gracias a su diseño inteligente.",
                 "price": "$6.000",
-                "images": ["images/regalos/gatito-vigila.jpg", "images/regalos/gatito-vigila-2.jpg", "images/regalos/gatito-vigila-3.jpg", "images/regalos/gatito-vigila-4.jpg"],
+                "images": ["images/gatito-vigila.jpg", "images/gatito-vigila-2.jpg", "images/gatito-vigila-3.jpg", "images/gatito-vigila-4.jpg"],
+                "featured": true
+            },
+            {
+                "id": "prod_13",
+                "title": "Llavero soporte para celulares",
+                "category": "accesorios",
+                "description": "Práctico llavero que sirve como soporte para tu celular. Compacto y útil.",
+                "price": "$2.500",
+                "images": ["images/llavero-soporte-1.jpg", "images/llavero-soporte-2.jpg", "images/llavero-soporte-3.jpg", "images/llavero-soporte-4.jpg", "images/llavero-soporte-5.jpg"],
+                "featured": true
+            },
+            {
+                "id": "prod_14",
+                "title": "Maceta gatito con ovillo de hilo",
+                "category": "hogar",
+                "description": "Tierno gatito con ovillo de hilo, ideal para tus plantas pequeñas.",
+                "price": "$8.000",
+                "images": ["images/maceta-gatito-1.jpg", "images/maceta-gatito-2.jpg", "images/maceta-gatito-3.jpg"],
                 "featured": true
             },
             {
@@ -170,60 +187,11 @@
                 "description": "Llaveros personalizados con diversos diseños y escudos.",
                 "price": "Consultar",
                 "images": [
-                    "images/regalos/llaveros-varios-1.jpg", "images/regalos/llaveros-varios-2.jpg", "images/regalos/llaveros-varios-3.jpg",
-                    "images/regalos/llaveros-varios-4.jpg", "images/regalos/llaveros-varios-5.jpg", "images/regalos/llaveros-varios-6.jpg",
-                    "images/regalos/llaveros-varios-7.jpg", "images/regalos/llaveros-varios-8.jpg", "images/regalos/llaveros-varios-9.jpg", 
-                    "images/regalos/llaveros-varios-final.jpg",
-                    "images/regalos/llaveros-varios-12.jpg", "images/regalos/llaveros-varios-13.jpg", "images/regalos/llaveros-varios-14.jpg", 
-                    "images/regalos/pietro1.jpeg", "images/regalos/piano.jpeg"
+                    "images/llaveros-varios-1.jpg", "images/llaveros-varios-2.jpg", "images/llaveros-varios-3.jpg",
+                    "images/llaveros-varios-4.jpg", "images/llaveros-varios-5.jpg", "images/llaveros-varios-6.jpg",
+                    "images/llaveros-varios-7.jpg", "images/llaveros-varios-8.jpg", "images/llaveros-varios-9.jpg", "images/llaveros-varios-final.jpg",
+                    "images/llaveros-varios-12.jpg", "images/llaveros-varios-13.jpg", "images/llaveros-varios-14.jpg", "images/pietro1.jpeg", "images/piano.jpeg"
                 ],
-                "featured": true
-            },
-            {
-                "id": "prod_19",
-                "title": "Mate Rosa",
-                "category": "regalos",
-                "description": "Mate elegante en color rosa, ideal para quienes buscan un toque de distinción y estilo en cada cebada.",
-                "price": "$8.500",
-                "images": ["images/regalos/mate-rosa-1.jpg", "images/regalos/mate-rosa-2.jpg", "images/regalos/mate-rosa-3.jpg", "images/regalos/mate-rosa-4.jpg"],
-                "featured": true
-            },
-            {
-                "id": "prod_21",
-                "title": "Mate Geométrico",
-                "category": "regalos",
-                "description": "Mate con diseño geométrico vanguardista, una pieza de arte funcional para tus cebadas.",
-                "price": "$7.500",
-                "images": ["images/regalos/mate-geometrico-1.jpg", "images/regalos/mate-geometrico-2.jpg", "images/regalos/mate-geometrico-3.jpg", "images/regalos/mate-geometrico-4.jpg"],
-                "featured": true
-            },
-            {
-                "id": "prod_22",
-                "title": "Lapicero Torre Castillo",
-                "category": "regalos",
-                "description": "Original y detallado lapicero con diseño de torre de castillo, ideal para decorar tu escritorio.",
-                "price": "$6.500",
-                "images": ["images/regalos/lapicero-castillo-1.jpg", "images/regalos/lapicero-castillo-2.jpg", "images/regalos/lapicero-castillo-3.jpg", "images/regalos/lapicero-castillo-4.jpg", "images/regalos/lapicero-castillo-5.jpg"],
-                "featured": true
-            },
-            {
-                "id": "prod_26",
-                "title": "Souvenirs Personalizados (Diseños propios por tematicas)",
-                "category": "hogar",
-                "description": "Diseño unico a pedido de un cliente. Consulta por el tuyo!!!",
-                "price": "Consultar",
-                "images": ["images/regalos/Souvenir Mis50.jpg", "images/regalos/Smis50a.jpg", "images/regalos/Smis50b.jpg"],
-                "featured": true
-            },
-            
-            // --- SECCIÓN HOGAR ---
-            {
-                "id": "prod_14",
-                "title": "Maceta gatito con ovillo de hilo",
-                "category": "hogar",
-                "description": "Tierno gatito con ovillo de hilo, ideal para tus plantas pequeñas.",
-                "price": "$8.000",
-                "images": ["images/hogar/maceta-gatito-1.jpg", "images/hogar/maceta-gatito-2.jpg", "images/hogar/maceta-gatito-3.jpg"],
                 "featured": true
             },
             {
@@ -232,7 +200,7 @@
                 "category": "hogar",
                 "description": "Maceta con diseño geométrico moderno, ideal para cualquier espacio.",
                 "price": "$5.000",
-                "images": ["images/hogar/maceta-geo-1.jpg", "images/hogar/maceta-geo-2.jpg", "images/hogar/maceta-geo-3.jpg", "images/hogar/maceta-geo-4.jpg"],
+                "images": ["images/maceta-geo-1.jpg", "images/maceta-geo-2.jpg", "images/maceta-geo-3.jpg", "images/maceta-geo-4.jpg"],
                 "featured": true
             },
             {
@@ -241,63 +209,7 @@
                 "category": "hogar",
                 "description": "Maceta con diseño NEXO, elegante y moderna.",
                 "price": "$6.500",
-                "images": ["images/hogar/maceta-nexo-1.jpg", "images/hogar/maceta-nexo-2.jpg"],
-                "featured": true
-            },
-            {
-                "id": "prod_20",
-                "title": "Maceta cuadrada p/ suculentas",
-                "category": "hogar",
-                "description": "Maceta cuadrada minimalista ideal para suculentas, diseño moderno y limpio.",
-                "price": "$5.000",
-                "images": ["images/hogar/maceta-cuadrada-1.jpg", "images/hogar/maceta-cuadrada-2.jpg", "images/hogar/mc1.jpeg", "images/hogar/mc2.jpeg", "images/hogar/mc3.jpeg", "images/hogar/mc4.jpeg", "images/hogar/mc5.jpeg"],
-                "featured": true
-            },
-            {
-                "id": "prod_23",
-                "title": "Posavasos (Set de 6)",
-                "category": "hogar",
-                "description": "Set de 6 posavasos modernos, ideales para proteger tus superficies con estilo y originalidad.",
-                "price": "$8.000",
-                "images": ["images/hogar/posavasos-1.jpg"],
-                "featured": true
-            },
-            {
-                "id": "prod_24",
-                "title": "Maceta RAICES",
-                "category": "hogar",
-                "description": "Diseño orgánico y moderno, ideal para resaltar la belleza de tus plantas.",
-                "price": "$8.000",
-                "images": ["images/hogar/maceta-raices-1.jpg"],
-                "featured": true
-            },
-            {
-                "id": "prod_25",
-                "title": "Maceta Espiralada",
-                "category": "hogar",
-                "description": "Diseño moderno, saliendo de diseños tradicionales.",
-                "price": "$8.000",
-                "images": ["images/hogar/maceta espiralada.jpg"],
-                "featured": true
-            },
-            {
-                "id": "prod_27",
-                "title": "Chancla contra la pared",
-                "category": "hogar",
-                "description": "Para recordar el poder de la chancla, version con imán, adaptable para colocar en pared",
-                "price": "$6.000",
-                "images": ["images/hogar/chancla.jpeg"],
-                "featured": true
-            },
-            
-            // --- SECCIÓN ACCESORIOS ---
-            {
-                "id": "prod_13",
-                "title": "Llavero soporte para celulares",
-                "category": "accesorios",
-                "description": "Práctico llavero que sirve como soporte para tu celular. Compacto y útil.",
-                "price": "$2.500",
-                "images": ["images/accesorios/llavero-soporte-1.jpg", "images/accesorios/llavero-soporte-2.jpg", "images/accesorios/llavero-soporte-3.jpg", "images/accesorios/llavero-soporte-4.jpg", "images/accesorios/llavero-soporte-5.jpg"],
+                "images": ["images/maceta-nexo-1.jpg", "images/maceta-nexo-2.jpg"],
                 "featured": true
             },
             {
@@ -306,18 +218,97 @@
                 "category": "accesorios",
                 "description": "Elegante soporte para celular en forma de corazón, combinando utilidad y diseño.",
                 "price": "$8000",
-                "images": ["images/accesorios/soporte-corazon-1.jpg", "images/accesorios/soporte-corazon-2.jpg", "images/accesorios/soporte-corazon-3.jpg", "images/accesorios/soporte-corazon-4.jpg", "images/accesorios/sp1.jpeg", "images/accesorios/sp2.jpeg", "images/accesorios/sp3.jpeg"],
+                "images": ["images/soporte-corazon-1.jpg", "images/soporte-corazon-2.jpg", "images/soporte-corazon-3.jpg", "images/soporte-corazon-4.jpg", "images/sp1.jpeg", "images/sp2.jpeg", "images/sp3.jpeg"],
                 "featured": true
             },
-            
-            // --- SECCIÓN PERSONAJES ---
+            {
+                "id": "prod_19",
+                "title": "Mate Rosa",
+                "category": "regalos",
+                "description": "Mate elegante en color rosa, ideal para quienes buscan un toque de distinción y estilo en cada cebada.",
+                "price": "$8.500",
+                "images": ["images/mate-rosa-1.jpg", "images/mate-rosa-2.jpg", "images/mate-rosa-3.jpg", "images/mate-rosa-4.jpg"],
+                "featured": true
+            },
+            {
+                "id": "prod_20",
+                "title": "Maceta cuadrada p/ suculentas",
+                "category": "hogar",
+                "description": "Maceta cuadrada minimalista ideal para suculentas, diseño moderno y limpio.",
+                "price": "$5.000",
+                "images": ["images/maceta-cuadrada-1.jpg", "images/maceta-cuadrada-2.jpg", "images/mc1.jpeg", "images/mc2.jpeg", "images/mc3.jpeg", "images/mc4.jpeg", "images/mc5.jpeg"],
+                "featured": true
+            },
+            {
+                "id": "prod_21",
+                "title": "Mate Geométrico",
+                "category": "regalos",
+                "description": "Mate con diseño geométrico vanguardista, una pieza de arte funcional para tus cebadas.",
+                "price": "$7.500",
+                "images": ["images/mate-geometrico-1.jpg", "images/mate-geometrico-2.jpg", "images/mate-geometrico-3.jpg", "images/mate-geometrico-4.jpg"],
+                "featured": true
+            },
+            {
+                "id": "prod_22",
+                "title": "Lapicero Torre Castillo",
+                "category": "regalos",
+                "description": "Original y detallado lapicero con diseño de torre de castillo, ideal para decorar tu escritorio.",
+                "price": "$6.500",
+                "images": ["images/lapicero-castillo-1.jpg", "images/lapicero-castillo-2.jpg", "images/lapicero-castillo-3.jpg", "images/lapicero-castillo-4.jpg", "images/lapicero-castillo-5.jpg"],
+                "featured": true
+            },
+            {
+                "id": "prod_23",
+                "title": "Posavasos (Set de 6)",
+                "category": "hogar",
+                "description": "Set de 6 posavasos modernos, ideales para proteger tus superficies con estilo y originalidad.",
+                "price": "$8.000",
+                "images": ["images/posavasos-1.jpg"],
+                "featured": true
+            },
+            {
+                "id": "prod_24",
+                "title": "Maceta RAICES",
+                "category": "hogar",
+                "description": "Diseño orgánico y moderno, ideal para resaltar la belleza de tus plantas.",
+                "price": "$8.000",
+                "images": ["images/maceta-raices-1.jpg"],
+                "featured": true
+            },
+            {
+                "id": "prod_25",
+                "title": "Maceta Espiralada",
+                "category": "hogar",
+                "description": "Diseño moderno, saliendo de diseños tradicionales.",
+                "price": "$8.000",
+                "images": ["images/maceta espiralada.jpg"],
+                "featured": true
+            },
+            {
+                "id": "prod_26",
+                "title": "Souvenirs Personalizados (Diseños propios por tematicas)",
+                "category": "hogar",
+                "description": "Diseño unico a pedido de un cliente. Consulta por el tuyo!!!",
+                "price": "Consultar",
+                "images": ["images/Souvenir Mis50.jpg", "images/Smis50a.jpg", "images/Smis50b.jpg"],
+                "featured": true
+            },
+            {
+                "id": "prod_27",
+                "title": "Chancla contra la pared",
+                "category": "hogar",
+                "description": "Para recordar el poder de la chancla, version con imán, adaptable para colocar en pared",
+                "price": "$6.000",
+                "images": ["images/chancla.jpeg"],
+                "featured": true
+            },
             {
                 "id": "prod_28",
                 "title": "Merlina ojos moviles",
                 "category": "personaje",
                 "description": "Un personaje extravagante oscuro y ligeramente inquietante inspirado en la Familia Addams.",
                 "price": "$10.000",
-                "images": ["images/personajes/mer1.jpeg", "images/personajes/mer2.jpeg", "images/personajes/mer3.jpeg", "images/personajes/mer4.jpeg", "images/personajes/mer5.jpeg", "images/personajes/mer6.jpeg"],
+                "images": ["images/mer1.jpeg", "images/mer2.jpeg", "images/mer3.jpeg", "images/mer4.jpeg", "images/mer5.jpeg", "images/mer6.jpeg"],
                 "featured": true
             },
             {
@@ -326,7 +317,7 @@
                 "category": "personaje",
                 "description": "Bonito perrito con sus ojos móviles",
                 "price": "$6.000",
-                "images": ["images/personajes/bull1.jpeg", "images/personajes/bull2.jpeg", "images/personajes/bull3.jpeg", "images/personajes/bull4.jpeg"],
+                "images": ["images/bull1.jpeg", "images/bull2.jpeg", "images/bull3.jpeg", "images/bull4.jpeg"],
                 "featured": true
             },
             {
@@ -335,7 +326,7 @@
                 "category": "personaje",
                 "description": "Este modelo está diseñado en una forma sencilla y estilizada que lo hace perfecto como juguete de escritorio, decoración o regalo.",
                 "price": "$6.000",
-                "images": ["images/personajes/ppt1.jpeg", "images/personajes/ppt2.jpeg", "images/personajes/ppt3.jpeg", "images/personajes/ppt4.jpeg"],
+                "images": ["images/ppt1.jpeg", "images/ppt2.jpeg", "images/ppt3.jpeg", "images/ppt4.jpeg"],
                 "featured": true
             }
         ];
